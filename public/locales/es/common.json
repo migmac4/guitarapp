@@ -1,19 +1,18 @@
 {
-  "header": {
-    "title": "Mi Sitio Web",
-    "nav": {
-      "home": "Inicio",
-      "about": "Acerca",
-      "contact": "Contacto"
-    }
-  },
   "welcome": "Bienvenido a la App Internacionalizada",
   "example": {
     "title": "Componente de Ejemplo",
-    "button": "Haz Clic",
+    "button": "Haga Clic Aquí",
     "description": "Este es un componente de ejemplo estilizado con Tailwind CSS"
   },
-  "footer": {
-    "copyright": "© 2023 Mi Sitio Web. Todos los derechos reservados."
+  "auth": {
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "loginWithGoogle": "Iniciar sesión con Google",
+    "needAccount": "¿No tienes una cuenta? Regístrate",
+    "haveAccount": "¿Ya tienes una cuenta? Inicia sesión",
+    "logout": "Cerrar sesión"
   }
 }

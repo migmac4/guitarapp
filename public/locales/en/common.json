@@ -1,19 +1,18 @@
 {
-  "header": {
-    "title": "My Website",
-    "nav": {
-      "home": "Home",
-      "about": "About",
-      "contact": "Contact"
-    }
-  },
   "welcome": "Welcome to the Internationalized App",
   "example": {
     "title": "Example Component",
-    "button": "Click Me",
+    "button": "Click Here",
     "description": "This is an example component styled with Tailwind CSS"
   },
-  "footer": {
-    "copyright": "© 2023 My Website. All rights reserved."
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "loginWithGoogle": "Login with Google",
+    "needAccount": "Don't have an account? Register",
+    "haveAccount": "Already have an account? Login",
+    "logout": "Logout"
   }
 }

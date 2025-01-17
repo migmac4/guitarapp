@@ -3,6 +3,7 @@ import { i18nSettings } from '../i18n/settings'
 import { TranslationProvider } from '../providers/TranslationProvider'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ThemeToggle } from '@/components/theme-toggle'
+import { AuthProvider } from '@/contexts/AuthContext'
 import { Metadata } from 'next'
 import { headers } from 'next/headers'
 
@@ -44,12 +45,14 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TranslationProvider locale={locale}>
-            <div className="fixed top-4 right-4 z-50">
-              <ThemeToggle />
-            </div>
-            {children}
-          </TranslationProvider>
+          <AuthProvider>
+            <TranslationProvider locale={locale}>
+              <div className="fixed top-4 right-4 z-50">
+                <ThemeToggle />
+              </div>
+              {children}
+            </TranslationProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
