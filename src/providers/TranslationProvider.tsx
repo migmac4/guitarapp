@@ -6,12 +6,9 @@ import { initReactI18next } from 'react-i18next'
 import Backend from 'i18next-http-backend'
 import { useEffect, useState } from 'react'
 import { i18nSettings } from '../i18n/settings'
-import { debug } from '../utils/debug'
 
 async function initI18next(locale: string) {
   try {
-    debug.trace('TranslationProvider:init', `Initializing i18next for locale: ${locale}`)
-
     const i18n = i18next.createInstance()
     
     await i18n
@@ -37,15 +34,12 @@ async function initI18next(locale: string) {
 
     // Verificar se as traduções foram carregadas
     const resources = i18n.getResourceBundle(locale, 'common')
-    debug.info('TranslationProvider:init', `Resources loaded for ${locale}:`, resources)
-
     if (!resources) {
       throw new Error(`No translations found for locale: ${locale}`)
     }
 
     return i18n
   } catch (error) {
-    debug.error('TranslationProvider:init', 'Initialization failed:', error)
     throw error
   }
 }
@@ -70,10 +64,7 @@ export function TranslationProvider({
   })
 
   useEffect(() => {
-    debug.trace('TranslationProvider', `Effect triggered for locale: ${locale}`)
-    
     if (!locale) {
-      debug.error('TranslationProvider', 'No locale provided')
       setState(prev => ({ 
         ...prev, 
         error: new Error('No locale provided'),
@@ -83,7 +74,6 @@ export function TranslationProvider({
     }
 
     if (!i18nSettings.locales.includes(locale)) {
-      debug.error('TranslationProvider', `Invalid locale: ${locale}`)
       setState(prev => ({ 
         ...prev, 
         error: new Error(`Invalid locale: ${locale}`),
@@ -94,16 +84,13 @@ export function TranslationProvider({
 
     // Só atualizar se o locale mudou
     if (state.activeLocale === locale && state.instance) {
-      debug.info('TranslationProvider', `Using existing instance for locale: ${locale}`)
       return
     }
 
-    debug.info('TranslationProvider', `Setting up new instance for locale: ${locale}`)
     setState(prev => ({ ...prev, loading: true }))
     
     initI18next(locale)
       .then(i18n => {
-        debug.info('TranslationProvider', `Setup complete for locale: ${locale}`)
         setState({
           instance: i18n,
           activeLocale: locale,
@@ -112,7 +99,6 @@ export function TranslationProvider({
         })
       })
       .catch(error => {
-        debug.error('TranslationProvider', 'Setup failed:', error)
         setState(prev => ({ 
           ...prev, 
           error, 
@@ -122,7 +108,6 @@ export function TranslationProvider({
   }, [locale])
 
   if (state.error) {
-    debug.error('TranslationProvider', 'Rendering error state:', state.error)
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="bg-red-50 text-red-500 p-4 rounded-lg">
@@ -133,7 +118,6 @@ export function TranslationProvider({
   }
 
   if (state.loading || !state.instance) {
-    debug.info('TranslationProvider', 'Rendering loading state')
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-gray-600">Loading translations...</div>
@@ -141,7 +125,6 @@ export function TranslationProvider({
     )
   }
 
-  debug.info('TranslationProvider', `Rendering with locale: ${state.activeLocale}`)
   return (
     <I18nextProvider i18n={state.instance}>
       {children}

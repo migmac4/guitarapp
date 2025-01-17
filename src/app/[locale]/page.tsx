@@ -10,21 +10,7 @@ export default function LocalePage({
 }) {
   const { t, i18n, ready } = useTranslation()
 
-  useEffect(() => {
-    console.log('🔍 [Page] Component mounted')
-    console.log('🔍 [Page] Params:', params)
-    console.log('🔍 [Page] i18n ready:', ready)
-    console.log('🔍 [Page] i18n current language:', i18n.language)
-    console.log('🔍 [Page] i18n loaded namespaces:', i18n.reportNamespaces?.getUsedNamespaces())
-    console.log('🔍 [Page] Translation test:', {
-      welcome: t('welcome'),
-      title: t('example.title'),
-      button: t('example.button')
-    })
-  }, [ready, t, i18n, params])
-
   if (!ready) {
-    console.log('🔍 [Page] Waiting for translations...')
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-lg">Loading translations...</div>
