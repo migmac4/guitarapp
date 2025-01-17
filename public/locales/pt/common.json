@@ -1,0 +1,19 @@
+{
+  "header": {
+    "title": "Meu Website",
+    "nav": {
+      "home": "Início",
+      "about": "Sobre",
+      "contact": "Contato"
+    }
+  },
+  "welcome": "Bem-vindo ao App Internacionalizado",
+  "example": {
+    "title": "Componente de Exemplo",
+    "button": "Clique Aqui",
+    "description": "Este é um componente de exemplo estilizado com Tailwind CSS"
+  },
+  "footer": {
+    "copyright": "© 2023 Meu Website. Todos os direitos reservados."
+  }
+}
