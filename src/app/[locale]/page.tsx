@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
+import { Button } from '@/components/ui/button'
 
 export default function LocalePage({
   params,
@@ -28,9 +28,14 @@ export default function LocalePage({
             {t('example.title')}
           </h2>
           
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition-colors">
-            {t('example.button')}
-          </button>
+          <div className="flex flex-wrap gap-4">
+            <Button>{t('example.button')}</Button>
+            <Button variant="secondary">Secondary</Button>
+            <Button variant="destructive">Destructive</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="link">Link</Button>
+          </div>
           
           <p className="mt-4 text-gray-600 dark:text-gray-300">
             {t('example.description')}
