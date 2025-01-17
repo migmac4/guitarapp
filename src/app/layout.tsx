@@ -1,6 +1,8 @@
 import './globals.css'
 import { i18nSettings } from '../i18n/settings'
 import { TranslationProvider } from '../providers/TranslationProvider'
+import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { Metadata } from 'next'
 import { headers } from 'next/headers'
 
@@ -34,11 +36,21 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body>
-        <TranslationProvider locale={locale}>
-          {children}
-        </TranslationProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TranslationProvider locale={locale}>
+            <div className="fixed top-4 right-4 z-50">
+              <ThemeToggle />
+            </div>
+            {children}
+          </TranslationProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
