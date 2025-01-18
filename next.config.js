@@ -10,6 +10,20 @@ const nextConfig = {
         destination: '/public/locales/:path*',
       },
     ]
+  },
+  // Configuração de headers de segurança
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin-allow-popups'
+          }
+        ]
+      }
+    ]
   }
 }
 
