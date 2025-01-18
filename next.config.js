@@ -10,7 +10,7 @@ const nextConfig = {
         destination: '/public/locales/:path*',
       },
     ]
-  },
+  }
 }
 
 module.exports = nextConfig

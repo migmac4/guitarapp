@@ -1,19 +1,26 @@
 'use client'
 
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
-import { AuthForm } from '@/components/auth/AuthForm'
 import { useAuth } from '@/contexts/AuthContext'
+import { useParams, useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
-export default function LocalePage({
-  params,
-}: {
-  params: { locale: string }
-}) {
+export default function LocalePage() {
   const { t, i18n } = useTranslation()
   const { user, logout } = useAuth()
+  const router = useRouter()
+  const params = useParams()
+  const locale = params?.locale as string
+  
+  useEffect(() => {
+    if (!user || !user.emailVerified) {
+      router.push(`/${locale}/login`)
+    }
+  }, [user, router, locale])
 
-  if (!i18n.isInitialized) {
+  if (!i18n.isInitialized || !user || !user.emailVerified) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-lg">Loading translations...</div>
@@ -26,8 +33,7 @@ export default function LocalePage({
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-8">{t('welcome')}</h1>
         
-        {user ? (
-          <div className="bg-card rounded-lg shadow-lg p-8">
+        <div className="bg-card rounded-lg shadow-lg p-8">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-semibold">
                 {t('example.title')}
@@ -50,9 +56,6 @@ export default function LocalePage({
               {t('example.description')}
             </p>
           </div>
-        ) : (
-          <AuthForm />
-        )}
 
         <div className="mt-8 text-sm text-muted-foreground">
           Current Language: {i18n.language}

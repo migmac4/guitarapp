@@ -1,4 +1,5 @@
 import './globals.css'
+import React from 'react'
 import { i18nSettings } from '../i18n/settings'
 import { TranslationProvider } from '../providers/TranslationProvider'
 import { ThemeProvider } from '@/components/theme-provider'
@@ -26,10 +27,8 @@ export default async function RootLayout({
   // Tentar obter o locale de diferentes fontes
   const headersList = await headers()
   const localeFromHeader = headersList.get('x-locale')
-  const localeFromParams = params?.locale
-  
   // Determinar o locale final
-  const locale = localeFromParams || localeFromHeader || i18nSettings.defaultLocale
+  const locale = params?.locale || localeFromHeader || i18nSettings.defaultLocale
 
   // Validar o locale
   if (!i18nSettings.locales.includes(locale)) {
@@ -38,12 +37,13 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body>
+      <body className="min-h-screen bg-background text-foreground">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          storageKey="theme"
         >
           <AuthProvider>
             <TranslationProvider locale={locale}>

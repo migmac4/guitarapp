@@ -69,6 +69,10 @@ export function middleware(request: NextRequest) {
   
   // Adicionar locale aos headers para uso posterior
   response.headers.set('x-locale', currentLocale)
+
+  // Adicionar headers para permitir popups
+  response.headers.set('Cross-Origin-Opener-Policy', 'same-origin-allow-popups')
+  response.headers.set('Cross-Origin-Embedder-Policy', 'unsafe-none')
   
   return response
 }

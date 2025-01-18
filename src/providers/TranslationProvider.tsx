@@ -7,42 +7,27 @@ import Backend from 'i18next-http-backend'
 import { useEffect, useState } from 'react'
 import { i18nSettings } from '../i18n/settings'
 
-async function initI18next(locale: string) {
-  try {
-    const i18n = i18next.createInstance()
-    
-    await i18n
-      .use(Backend)
-      .use(initReactI18next)
-      .init({
-        debug: true,
-        lng: locale,
-        fallbackLng: i18nSettings.defaultLocale,
-        supportedLngs: i18nSettings.locales,
-        ns: ['common'],
-        defaultNS: 'common',
-        backend: {
-          loadPath: '/locales/{{lng}}/{{ns}}.json',
-        },
-        interpolation: {
-          escapeValue: false,
-        },
-        react: {
-          useSuspense: false,
-        },
-      })
+const i18n = i18next.createInstance()
 
-    // Verificar se as traduções foram carregadas
-    const resources = i18n.getResourceBundle(locale, 'common')
-    if (!resources) {
-      throw new Error(`No translations found for locale: ${locale}`)
-    }
-
-    return i18n
-  } catch (error) {
-    throw error
-  }
-}
+i18n
+  .use(Backend)
+  .use(initReactI18next)
+  .init({
+    debug: true,
+    fallbackLng: i18nSettings.defaultLocale,
+    supportedLngs: i18nSettings.locales,
+    ns: ['common'],
+    defaultNS: 'common',
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+    },
+    interpolation: {
+      escapeValue: false,
+    },
+    react: {
+      useSuspense: false,
+    },
+  })
 
 export function TranslationProvider({ 
   children,
@@ -51,73 +36,44 @@ export function TranslationProvider({
   children: React.ReactNode
   locale: string
 }) {
-  const [state, setState] = useState<{
-    instance: typeof i18next | null;
-    activeLocale: string | null;
-    error: Error | null;
-    loading: boolean;
-  }>({
-    instance: null,
-    activeLocale: null,
-    error: null,
-    loading: true
-  })
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
 
   useEffect(() => {
     if (!locale) {
-      setState(prev => ({ 
-        ...prev, 
-        error: new Error('No locale provided'),
-        loading: false 
-      }))
+      setError(new Error('No locale provided'))
+      setIsLoading(false)
       return
     }
 
     if (!i18nSettings.locales.includes(locale)) {
-      setState(prev => ({ 
-        ...prev, 
-        error: new Error(`Invalid locale: ${locale}`),
-        loading: false 
-      }))
+      setError(new Error(`Invalid locale: ${locale}`))
+      setIsLoading(false)
       return
     }
 
-    // Só atualizar se o locale mudou
-    if (state.activeLocale === locale && state.instance) {
-      return
-    }
-
-    setState(prev => ({ ...prev, loading: true }))
-    
-    initI18next(locale)
-      .then(i18n => {
-        setState({
-          instance: i18n,
-          activeLocale: locale,
-          error: null,
-          loading: false
-        })
+    i18n.changeLanguage(locale)
+      .then(() => {
+        setIsLoading(false)
+        setError(null)
       })
       .catch(error => {
-        setState(prev => ({ 
-          ...prev, 
-          error, 
-          loading: false 
-        }))
+        setError(error)
+        setIsLoading(false)
       })
   }, [locale])
 
-  if (state.error) {
+  if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="bg-red-50 text-red-500 p-4 rounded-lg">
-          Error loading translations: {state.error.message}
+          Error loading translations: {error.message}
         </div>
       </div>
     )
   }
 
-  if (state.loading || !state.instance) {
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-gray-600">Loading translations...</div>
@@ -126,7 +82,7 @@ export function TranslationProvider({
   }
 
   return (
-    <I18nextProvider i18n={state.instance}>
+    <I18nextProvider i18n={i18n}>
       {children}
     </I18nextProvider>
   )

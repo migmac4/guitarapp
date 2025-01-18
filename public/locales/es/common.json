@@ -6,13 +6,48 @@
     "description": "Este es un componente de ejemplo estilizado con Tailwind CSS"
   },
   "auth": {
-    "login": "Iniciar Sesión",
+    "login": "Iniciar sesión",
     "register": "Registrarse",
     "email": "Correo electrónico",
     "password": "Contraseña",
     "loginWithGoogle": "Iniciar sesión con Google",
     "needAccount": "¿No tienes una cuenta? Regístrate",
     "haveAccount": "¿Ya tienes una cuenta? Inicia sesión",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "loading": "Cargando...",
+    "or": "o",
+    "email-placeholder": "Ingresa tu correo electrónico",
+    "password-placeholder": "Ingresa tu contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "confirmPassword-placeholder": "Confirma tu contraseña",
+    "password-hint": "La contraseña debe tener al menos 6 caracteres",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "backToLogin": "Volver al inicio de sesión",
+    "resetPassword": "Restablecer contraseña",
+    "resetPasswordSent": "Hemos enviado un correo electrónico con instrucciones para restablecer su contraseña. Por favor revise su bandeja de entrada.",
+    "verification-sent": "Hemos enviado un correo electrónico de verificación. Por favor revise su bandeja de entrada.",
+    "resend-verification": "Reenviar correo de verificación",
+    "validation": {
+      "required": "Por favor, rellena este campo"
+    },
+    "errors": {
+      "password-mismatch": "Las contraseñas no coinciden",
+      "email-required": "El correo electrónico es obligatorio",
+      "invalid-email": "Por favor ingresa un correo electrónico válido",
+      "password-required": "La contraseña es obligatoria",
+      "auth/email-already-in-use": "El correo electrónico ya está en uso",
+      "auth/invalid-email": "Correo electrónico inválido",
+      "auth/operation-not-allowed": "Operación no permitida",
+      "auth/weak-password": "La contraseña es muy débil",
+      "auth/user-disabled": "Esta cuenta ha sido deshabilitada",
+      "auth/user-not-found": "Usuario no encontrado",
+      "auth/wrong-password": "Contraseña incorrecta",
+      "auth/invalid-credential": "Credenciales inválidas",
+      "auth/too-many-requests": "Demasiados intentos. Inténtalo de nuevo más tarde",
+      "auth/network-request-failed": "Error de conexión. Verifica tu internet",
+      "auth/popup-closed-by-user": "Inicio de sesión con Google cancelado",
+      "default": "Ocurrió un error. Por favor inténtalo de nuevo",
+      "auth/email-not-verified": "Por favor verifica tu correo electrónico antes de iniciar sesión"
+    }
   }
 }
